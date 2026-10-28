@@ -1,0 +1,38 @@
+# Bundle patch for dsh-llm-model-rate-limit.
+#
+# The plugin is inserted as a uniquely addressed row of the profile's root
+# Include. That is exactly what `ctx.configEditor` needs to persist edits made
+# from the composer control: the row id below ("model-rate-limit") is the
+# identity the editor writes back into `cordis.patch.yml`.
+- insert:
+    - id: model-rate-limit
+      name: dsh-llm-model-rate-limit
+      config:
+        # Per-model policies live here, keyed by "provider/model":
+        #
+        #   models:
+        #     deepseek-account/deepseek-flash:
+        #       requests: { perSecond: 0, perMinute: 30, perHour: 0, perDay: 0 }
+        #       tokens:   { perSecond: 0, perMinute: 0,  perHour: 0, perDay: 0 }
+        #
+        # A window value of 0 always means "unlimited" and is never cascaded.
+        models: {}
+        # Reserved output allowance when a request carries no maxTokens.
+        reservedOutputTokens: 8192
+        # Fixed allowance charged for one image block while estimating input.
+        imageTokens: 1024
+        # Margin added to every computed wake-up so a rolling-window edge is
+        # never raced (milliseconds).
+        wakeMarginMs: 80
+        # Extra random spread added to that margin (milliseconds).
+        wakeJitterMs: 120
+        # Fallback provider cooldown when a 429 carries no Retry-After header.
+        retry:
+          initialDelayMs: 1000
+          maxDelayMs: 60000
+          maxAttempts: 6
+          jitterRatio: 0.25
+        # Persisted rolling-window counters survive restarts.
+        persistence:
+          enabled: true
+          flushIntervalMs: 5000

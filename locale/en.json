@@ -1,0 +1,4 @@
+{
+  "title": "Per-model rate limits",
+  "description": "Request and token rate limits for every model separately: rolling second/minute/hour/day windows, an idle wait queue that never stops the model, and 429 backoff with Retry-After."
+}
