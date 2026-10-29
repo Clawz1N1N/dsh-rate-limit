@@ -8,7 +8,7 @@ Each model (`provider/model`) gets its own budget over four rolling windows — 
 
 | | |
 |---|---|
-| ![Control collapsed — no limits yet](assets/preview.png) | ![Menu expanded with per-window limits](assets/Expanded preview.png) |
+| ![Control collapsed — no limits yet](assets/preview.png) | ![Menu expanded with per-window limits](assets/Expanded%20preview.png) |
 
 ## Where it lives
 
